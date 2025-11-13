@@ -10,12 +10,14 @@ RUN mkdir /app
 RUN chown node:node /app
 USER node
 WORKDIR /app
+ADD get-shaka.sh /get-shaka.sh
+RUN /get-shaka.sh ${TARGETPLATFORM} /usr/bin/packager && rm /get-shaka.sh
 COPY --chown=node:node ["package.json", "package-lock.json*", "tsconfig*.json", "./"]
 COPY --chown=node:node ["src", "./src"]
 # Delete prepare script to avoid errors from husky
 RUN npm pkg delete scripts.prepare \
     && npm ci --omit=dev
-COPY --from=google/shaka-packager:v3.2.0 /usr/bin/packager /usr/bin/packager
+#COPY --from=google/shaka-packager:v3.2.0 /usr/bin/packager /usr/bin/packager
 CMD [ "npm", "run", "start", "--", "-r" ]
 
 FROM without-volume-definition
