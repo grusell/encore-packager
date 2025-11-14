@@ -10,7 +10,7 @@ ENV NODE_ENV=production
 EXPOSE 8000
 RUN apk --no-cache add curl
 RUN apk --no-cache add aws-cli
-RUN curl -L -o /usr/bin/packager https://github.com/shaka-project/shaka-packager/releases/download/v${SHAKA_VERSION}/packager-linux-${SHAKA_ARCH} && chmod a+x /usr/bin/backager
+RUN curl -L -o /usr/bin/packager https://github.com/shaka-project/shaka-packager/releases/download/v${SHAKA_VERSION}/packager-linux-${SHAKA_ARCH} && chmod a+x /usr/bin/packager
 RUN mkdir /app
 RUN chown node:node /app
 USER node
